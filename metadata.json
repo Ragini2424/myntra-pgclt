@@ -1,0 +1,11 @@
+{
+  "name": "Myntra Bharat",
+  "description": "An AI-powered, hyper-local shopping experience adapted for Indian cities.",
+  "requestFramePermissions": [
+    "geolocation",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
