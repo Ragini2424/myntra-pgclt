@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myntra Mini Checkout</title>
+<style>
+  :root { --pink: #ff3f6c; --ink: #282c3f; --bg: #f5f5f6; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); display: flex; justify-content: center; padding: 24px 16px;
+  }
+  .card {
+    background: #fff; max-width: 380px; width: 100%; border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden;
+  }
+  .header { background: var(--pink); color: #fff; padding: 18px 20px; font-weight: 700; font-size: 18px; }
+  .product-img { width: 100%; display: block; }
+  .body { padding: 18px 20px; }
+  .name { font-size: 16px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
+  .meta { color: #94969f; font-size: 13px; margin-bottom: 14px; }
+  .price-row { display: flex; justify-content: space-between; font-size: 15px; margin: 6px 0; color: var(--ink); }
+  .total { font-weight: 700; font-size: 18px; border-top: 1px dashed #e0e0e0; padding-top: 10px; margin-top: 10px; }
+  .upi-options { display: flex; gap: 10px; margin: 16px 0; }
+  .upi-chip {
+    flex: 1; text-align: center; border: 1px solid #e0e0e0; border-radius: 8px;
+    padding: 8px 4px; font-size: 12px; color: var(--ink); background: #fafafa;
+  }
+  .pay-btn {
+    width: 100%; background: var(--pink); color: #fff; border: none; padding: 14px;
+    border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px;
+  }
+  .pay-btn:disabled { background: #ccc; cursor: default; }
+  .note { font-size: 11px; color: #94969f; text-align: center; margin-top: 10px; }
+  .success { display: none; text-align: center; padding: 40px 20px; }
+  .success.show { display: block; }
+  .checkmark { font-size: 48px; color: #14958f; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">🛍️ Myntra Mini — Secure Checkout</div>
+
+    <div id="checkoutView">
+      <img class="product-img" src="{{ order.product.image_url }}" alt="{{ order.product.name }}">
+      <div class="body">
+        <p class="name">{{ order.product.name }}</p>
+        <p class="meta">Size: {{ order.size }} &nbsp;•&nbsp; Order #{{ order_id }}</p>
+
+        <div class="price-row"><span>Item price</span><span>₹{{ order.product.price }}</span></div>
+        <div class="price-row"><span>Delivery</span><span>FREE</span></div>
+        <div class="price-row total"><span>Total</span><span>₹{{ order.product.price }}</span></div>
+
+        <div class="upi-options">
+          <div class="upi-chip">GPay</div>
+          <div class="upi-chip">PhonePe</div>
+          <div class="upi-chip">Paytm</div>
+          <div class="upi-chip">BHIM</div>
+        </div>
+
+        <button class="pay-btn" id="payBtn" onclick="pay()">Pay ₹{{ order.product.price }} via UPI</button>
+        <p class="note">Simulated payment for demo purposes — no real money moves.</p>
+      </div>
+    </div>
+
+    <div class="success" id="successView">
+      <div class="checkmark">✅</div>
+      <h3>Payment Successful</h3>
+      <p>Head back to WhatsApp — your order confirmation and tracking updates are on the way!</p>
+    </div>
+  </div>
+
+<script>
+async function pay() {
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.innerText = 'Processing...';
+  const res = await fetch(window.location.pathname + '/confirm', { method: 'POST' });
+  if (res.ok) {
+    document.getElementById('checkoutView').style.display = 'none';
+    document.getElementById('successView').classList.add('show');
+  } else {
+    btn.disabled = false;
+    btn.innerText = 'Pay ₹{{ order.product.price }} via UPI';
+    alert('Something went wrong — try again.');
+  }
+}
+</script>
+</body>
+</html>
