@@ -26,7 +26,7 @@ Our system uses the Gemini API to act as the brain of the Myntra Bharat experien
 ## 🔌 APIs Used
 - **Google Gemini API (gemini-2.5-flash)**: For NLP parsing, regional asset generation, and intent-based product ranking.
 - **BigDataCloud Reverse Geocoding**: To convert browser coordinates into City/State data.
-- **Unsplash API (via Image placeholders)**: Dynamic localized aesthetics based on AI-generated search queries.
+
 
 ## 🛠️ Installation Instructions
 \`\`\`bash
@@ -35,14 +35,3 @@ npm run dev
 \`\`\`
 The application starts a full-stack node process, wrapping Vite as middleware and serving standard API routes on the same port (3000).
 
-## 🧪 Testing Checklist
-- [x] Auto-detect location via browser geolocation.
-- [x] Manually change city (e.g., from Jaipur to Kolkata) and observe the UI colors, greeting, and background adapt instantly.
-- [x] Search using Hinglish (e.g., "college ke liye daily shoes").
-- [x] Verify search results show "AI Pick" reasoning bubbles.
-- [x] Verify responsive layout across mobile and desktop.
-
-## 🔮 Future Improvements
-1. Replace Unsplash with curated local Myntra asset CDNs.
-2. Integrate real weather API for highly precise climate indexing.
-3. Map the Gemini outputs directly to a live Myntra product catalog database (e.g., via vector search).
